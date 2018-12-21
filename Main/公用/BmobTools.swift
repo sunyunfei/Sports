@@ -374,6 +374,170 @@ class BmobTools: NSObject {
         
     }
     
+    //获取训练列表
+    static func post_xl(success:@escaping ((Array<XLModel>) ->()),failure:@escaping ((String) -> ())){
+        
+        let bquery:BmobQuery = BmobQuery.init(className: "xl")
+        bquery.findObjectsInBackground { (array, error) in
+            
+            if error != nil{
+                
+                failure("数据请求失败")
+            }else{
+                
+                let rArray:Array<BmobObject> = array as! Array<BmobObject>
+                var mArrays:Array<XLModel> = Array.init()
+                for obj:BmobObject in rArray{
+                    
+                    let model:XLModel = XLModel()
+                    model.xlId = obj.objectId
+                    model.name = obj.object(forKey: "name") as? String
+                    model.icon = obj.object(forKey: "icon") as? String
+                    model.intro = obj.object(forKey: "intro") as? String
+                    model.time = obj.object(forKey: "time") as? String
+                    model.address = obj.object(forKey: "address") as? String
+                    mArrays.append(model)
+                }
+                
+                success(mArrays)
+            }
+        }
+    }
+    
+    
+    
+    //获取报名的训练
+    static func post_obtainCareXL(success:@escaping ((Array<XLBMModel>) ->()),failure:@escaping ((String) -> ())){
+        
+        let d:UserDefaults = UserDefaults.init()
+        let account:String? = d.object(forKey: "location_user") as? String
+        
+        let bquery:BmobQuery = BmobQuery.init(className: "user_xl")
+        bquery.whereKey("userId", equalTo: account)
+        bquery.findObjectsInBackground { (array, error) in
+            
+            if error != nil{
+                
+                failure("数据请求失败")
+            }else{
+                
+                let rArray:Array<BmobObject> = array as! Array<BmobObject>
+                var mArrays:Array<XLBMModel> = Array.init()
+                for obj:BmobObject in rArray{
+                    
+                    let model:XLBMModel = XLBMModel()
+                    
+                    model.userId = obj.object(forKey: "userId") as? String
+                    model.name = obj.object(forKey: "name") as? String
+                    model.xlId = obj.object(forKey: "xlId") as? String
+                    model.icon = obj.object(forKey: "icon") as? String
+                    mArrays.append(model)
+                }
+                
+                success(mArrays)
+            }
+        }
+    }
+    
+    //报名训练
+    static func post_carexl(_ model:XLModel,success:@escaping (() ->()),failure:@escaping ((String) -> ())){
+        
+        let d:UserDefaults = UserDefaults.init()
+        let account:String? = d.object(forKey: "location_user") as? String
+        
+        //先判断数据是否已经有对应的数据了
+        post_obtainCareXL(success: { (array) in
+            
+            var flag:Bool = false
+            for obj:XLBMModel in array{
+                
+                if obj.xlId == model.xlId{
+                    
+                    failure("已经报名成功了,无需再次报名")
+                    flag = true
+                    break
+                }
+            }
+            
+            if !flag{
+                
+               
+                let obj:BmobObject = BmobObject.init(className: "user_xl")
+                obj.setObject(model.xlId, forKey: "xlId")
+                obj.setObject(model.icon, forKey: "icon")
+                obj.setObject(model.name, forKey: "name")
+                obj.setObject(account, forKey: "userId")
+                obj.saveInBackground { (flag, error) in
+                    if flag{
+                        
+                        success()
+                        
+                    }else{
+                        
+                        failure((error?.localizedDescription)!)
+                    }
+                }
+            }
+            
+        }) { (error) in
+            
+            failure(error)
+        }
+        
+    }
+    
+    
+    //获取提问
+    static func post_tw(_ xlId:String,success:@escaping ((Array<XLASKModel>) ->()),failure:@escaping ((String) -> ())){
+        
+        let bquery:BmobQuery = BmobQuery.init(className: "xl_ask")
+        bquery.whereKey("xlId", equalTo: xlId)
+        bquery.findObjectsInBackground { (array, error) in
+            
+            if error != nil{
+                
+                failure("数据请求失败")
+            }else{
+                
+                let rArray:Array<BmobObject> = array as! Array<BmobObject>
+                var mArrays:Array<XLASKModel> = Array.init()
+                for obj:BmobObject in rArray{
+                    
+                    let model:XLASKModel = XLASKModel()
+                    model.userName = obj.object(forKey: "userName") as? String
+                    model.replay = obj.object(forKey: "replay") as? String
+                    model.xlId = obj.object(forKey: "xlId") as? String
+                    model.ask = obj.object(forKey: "ask") as? String
+                    mArrays.append(model)
+                }
+                
+                success(mArrays)
+            }
+        }
+    }
+    
+    
+    //提交提问
+    static func post_xltw(_ model:XLASKModel,success:@escaping (() ->()),failure:@escaping ((String) -> ())){
+        
+        //materQuestion
+        let obj:BmobObject = BmobObject.init(className: "xl_ask")
+        obj.setObject(model.xlId, forKey: "xlId")
+        obj.setObject(model.ask, forKey: "ask")
+        let d:UserDefaults = UserDefaults.init()
+        let account:String? = d.object(forKey: "location_user") as? String
+        obj.setObject(account, forKey: "userName")
+        obj.saveInBackground { (flag, error) in
+            if flag{
+                
+                success()
+                
+            }else{
+                
+                failure((error?.localizedDescription)!)
+            }
+        }
+    }
     
     
     /// - Returns: 日期字符串

@@ -19,9 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Bmob.register(withAppKey: "a8965c7b5097e9cc8c33fe438d2e4bee")
         
         //删除登录状态
-        let d:UserDefaults = UserDefaults.init()
-        d.removeObject(forKey: "location_user")
-        d.synchronize()
+//        let d:UserDefaults = UserDefaults.init()
+//        d.removeObject(forKey: "location_user")
+//        d.synchronize()
         
         return true
     }

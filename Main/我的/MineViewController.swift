@@ -19,6 +19,12 @@ class MineViewController: RootTableViewController {
 
         self.tableView.rowHeight = 40
         
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
         //显示数据
         let user:UserModel? = SportsTools.obtainUser()
         if let u:UserModel = user {
@@ -35,5 +41,22 @@ class MineViewController: RootTableViewController {
         }
     }
     
-
+    @IBAction func clickEdit(_ sender: Any) {
+        
+        let story:UIStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let login:SetController = story.instantiateViewController(withIdentifier: "set") as! SetController
+        login.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(login, animated: true)
+    }
+    
+    
+    //退出登录
+    @IBAction func loginOut(_ sender: Any) {
+        
+        let d:UserDefaults = UserDefaults.init()
+        d.removeObject(forKey: "location_user")
+        d.synchronize()
+        
+        SportsTools.presentLoginVC()
+    }
 }
