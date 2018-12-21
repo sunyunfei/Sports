@@ -10,6 +10,7 @@ import UIKit
 
 class HomeCell: UITableViewCell {
 
+    @IBOutlet weak var cancelBtn: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -28,6 +29,21 @@ class HomeCell: UITableViewCell {
         super.awakeFromNib()
         
         SportsTools.cutEvent(icon, false, 4, 0, UIColor.white)
+    }
+    
+    //取消报名
+    @IBAction func clickCancelBtn(_ sender: Any) {
+        
+        //取消  post_deleteCareCourse
+        BmobTools.post_deleteActive((model?.homeId)!, success: {
+            
+            self.contentView.hideToastActivity()
+            NotificationCenter.default.post(name: NSNotification.Name.init("refresh"), object: nil)
+        }) { (error) in
+            
+            self.contentView.hideToastActivity()
+            self.contentView.makeToast(error)
+        }
     }
     
     func showData(){

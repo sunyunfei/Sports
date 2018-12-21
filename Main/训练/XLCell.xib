@@ -18,8 +18,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="90.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zHx-Pf-iUg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="90.5"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zHx-Pf-iUg">
+                        <rect key="frame" x="4" y="4" width="312" height="82.5"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="训练名称" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uCw-wu-cWd">
                         <rect key="frame" x="16" y="11" width="288" height="69"/>
@@ -30,10 +30,10 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="uCw-wu-cWd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="503-SB-acE"/>
-                    <constraint firstAttribute="bottom" secondItem="zHx-Pf-iUg" secondAttribute="bottom" id="5Ax-50-q1Q"/>
-                    <constraint firstAttribute="trailing" secondItem="zHx-Pf-iUg" secondAttribute="trailing" id="8BL-Qe-MIN"/>
-                    <constraint firstItem="zHx-Pf-iUg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="AV1-NT-VME"/>
-                    <constraint firstItem="zHx-Pf-iUg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="PJj-W1-8Rv"/>
+                    <constraint firstAttribute="bottom" secondItem="zHx-Pf-iUg" secondAttribute="bottom" constant="4" id="5Ax-50-q1Q"/>
+                    <constraint firstAttribute="trailing" secondItem="zHx-Pf-iUg" secondAttribute="trailing" constant="4" id="8BL-Qe-MIN"/>
+                    <constraint firstItem="zHx-Pf-iUg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="4" id="AV1-NT-VME"/>
+                    <constraint firstItem="zHx-Pf-iUg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="PJj-W1-8Rv"/>
                     <constraint firstAttribute="bottomMargin" secondItem="uCw-wu-cWd" secondAttribute="bottom" id="gQk-Sb-AEJ"/>
                     <constraint firstItem="uCw-wu-cWd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="gfq-H2-euG"/>
                     <constraint firstAttribute="trailingMargin" secondItem="uCw-wu-cWd" secondAttribute="trailing" id="kgl-0i-wR0"/>

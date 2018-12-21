@@ -59,4 +59,21 @@ class MineViewController: RootTableViewController {
         
         SportsTools.presentLoginVC()
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if indexPath.section == 0 {
+            
+            let s:MineSecondController = MineSecondController()
+            s.index = indexPath.row
+            s.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(s, animated: true)
+        }else if indexPath.section == 1{
+            
+            //清除缓存
+            let size = SDImageCache.shared().getSize()
+            SDImageCache.shared().clearDisk(onCompletion: nil)
+            self.icon.makeToast("清除缓存" + String(size/1000/1000) + "M成功")
+        }
+    }
 }
