@@ -35,6 +35,7 @@ class HomeCell: UITableViewCell {
     @IBAction func clickCancelBtn(_ sender: Any) {
         
         //取消  post_deleteCareCourse
+        self.contentView.makeToastActivity(.center)
         BmobTools.post_deleteActive((model?.homeId)!, success: {
             
             self.contentView.hideToastActivity()
